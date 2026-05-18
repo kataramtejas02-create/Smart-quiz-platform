@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import TeacherDashboard from "./pages/TeacherDashboard";
-import StudentDashboard from "./pages/StudentDashboard";
-import CreateQuiz from "./pages/CreateQuiz";
+import Login from "./pages/login";
+import Register from "./pages/register";
+import TeacherDashboard from "./pages/teacherdashboard";
+import StudentDashboard from "./pages/studentdashboard";
+import CreateQuiz from "./pages/createquiz";
 import AddQuestion from "./pages/addquestion";
 import AttemptQuiz from "./pages/attemptquiz";
 import Leaderboard from "./pages/leaderboard";
