@@ -215,4 +215,17 @@ router.get("/leaderboard", (req, res) => {
   });
 });
 
+router.get("/quizzes", (req, res) => {
+  const sql = "SELECT * FROM quizzes";
+
+  db.query(sql, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send([]);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 export default router;
