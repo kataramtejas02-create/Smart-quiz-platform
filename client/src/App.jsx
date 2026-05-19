@@ -36,10 +36,8 @@ function App() {
           path="/add-question"
           element={<AddQuestion />}
         />
-        <Route
-          path="/attempt-quiz"
-          element={<AttemptQuiz />}
-        />
+        <Route path="/attempt-quiz/:quiz_id" 
+        element={<AttemptQuiz />} />
         <Route
           path="/leaderboard"
           element={<Leaderboard />}
