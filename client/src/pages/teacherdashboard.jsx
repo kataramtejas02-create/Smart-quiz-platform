@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 
 function TeacherDashboard() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ function TeacherDashboard() {
         <div className="grid md:grid-cols-2 gap-8">
           <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl">
             <h2 className="text-3xl font-bold mb-4">
-              📝 Create Quiz
+               Create Quiz
             </h2>
 
             <p className="text-gray-300 mb-8">
@@ -31,7 +31,7 @@ function TeacherDashboard() {
 
           <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-8 shadow-2xl">
             <h2 className="text-3xl font-bold mb-4">
-              ❓ Add Questions
+               Add Questions
             </h2>
 
             <p className="text-gray-300 mb-8">

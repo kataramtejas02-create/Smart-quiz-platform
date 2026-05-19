@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 
 function Leaderboard() {
   const [leaders, setLeaders] =
@@ -29,7 +29,7 @@ function Leaderboard() {
 
       <div className="p-10">
         <h1 className="text-6xl font-black mb-10 bg-gradient-to-r from-yellow-300 to-orange-500 text-transparent bg-clip-text">
-          🏆 Leaderboard
+           Leaderboard
         </h1>
 
         <div className="backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl overflow-hidden shadow-2xl">

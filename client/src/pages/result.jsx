@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 
 function Result() {
   const location = useLocation();
@@ -15,7 +15,7 @@ function Result() {
       <div className="flex flex-col justify-center items-center p-10">
         <div className="w-full max-w-xl backdrop-blur-lg bg-white/10 border border-white/20 rounded-3xl p-10 shadow-2xl text-center">
           <h1 className="text-6xl font-black mb-8 bg-gradient-to-r from-green-400 to-emerald-500 text-transparent bg-clip-text">
-            🎉 Quiz Submitted
+            Quiz Submitted
           </h1>
 
           <p className="text-3xl mb-10 text-gray-200">
