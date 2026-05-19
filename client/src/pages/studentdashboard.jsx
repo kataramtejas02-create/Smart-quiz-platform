@@ -13,7 +13,7 @@ function StudentDashboard() {
 
   const fetchQuizzes = async () => {
     try {
-      const res = await api.get("/quizzes");
+      const res = await api.get("/quiz/latest");
       console.log(res.data);
       setQuizzes(res.data);
     } catch (err) {
