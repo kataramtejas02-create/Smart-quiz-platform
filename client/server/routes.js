@@ -228,4 +228,29 @@ router.get("/quizzes", (req, res) => {
   });
 });
 
+router.get("/quiz/:id", (req, res) => {
+  const quizId = req.params.id;
+
+  const sql = `
+    SELECT
+      questions.question_id,
+      questions.question_text,
+      options.option_id,
+      options.option_text
+    FROM questions
+    JOIN options
+    ON questions.question_id = options.question_id
+    WHERE questions.quiz_id = ?
+  `;
+
+  db.query(sql, [quizId], (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send([]);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 export default router;

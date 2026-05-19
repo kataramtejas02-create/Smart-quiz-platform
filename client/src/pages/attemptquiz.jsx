@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import { useNavigate } from "react-router-dom";
+import {
+  useNavigate,
+  useParams
+} from "react-router-dom";
 import Navbar from "../components/navbar";
 import { toast } from "react-toastify";
 
@@ -13,6 +16,8 @@ function AttemptQuiz() {
 
   const navigate = useNavigate();
 
+  const { id } = useParams();
+
   useEffect(() => {
     fetchQuiz();
   }, []);
@@ -20,7 +25,7 @@ function AttemptQuiz() {
   const fetchQuiz = async () => {
     try {
       const res = await api.get(
-        "/quiz/latest"
+        `/quiz/${id}`
       );
 
       const groupedQuestions = [];
@@ -78,8 +83,8 @@ function AttemptQuiz() {
   };
 
   const user = JSON.parse(
-  localStorage.getItem("user")
-);
+    localStorage.getItem("user")
+  );
 
   const handleSubmit = async () => {
     try {
@@ -87,7 +92,7 @@ function AttemptQuiz() {
         "/submit-quiz",
         {
           student_id: user.user_id,
-          quiz_id: 1,
+          quiz_id: id,
           answers
         }
       );
