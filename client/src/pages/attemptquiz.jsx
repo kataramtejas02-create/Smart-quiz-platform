@@ -1,22 +1,16 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
-import {
-  useNavigate,
-  useParams
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/navbar";
 import { toast } from "react-toastify";
 
 function AttemptQuiz() {
-  const [questions, setQuestions] =
-    useState([]);
-
-  const [answers, setAnswers] =
-    useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
 
   const navigate = useNavigate();
 
-  const { id } = useParams();
+  const { quiz_id } = useParams();
 
   useEffect(() => {
     fetchQuiz();
@@ -24,26 +18,21 @@ function AttemptQuiz() {
 
   const fetchQuiz = async () => {
     try {
-      const res = await api.get(
-        `/quiz/${id}`
-      );
+      const res = await api.get("/quiz/latest");
+
+      console.log("Quiz Data:", res.data);
 
       const groupedQuestions = [];
 
       res.data.forEach((item) => {
-        let question =
-          groupedQuestions.find(
-            (q) =>
-              q.question_id ===
-              item.question_id
-          );
+        let question = groupedQuestions.find(
+          (q) => q.question_id === item.question_id
+        );
 
         if (!question) {
           question = {
-            question_id:
-              item.question_id,
-            question_text:
-              item.question_text,
+            question_id: item.question_id,
+            question_text: item.question_text,
             options: []
           };
 
@@ -52,14 +41,13 @@ function AttemptQuiz() {
 
         question.options.push({
           option_id: item.option_id,
-          option_text:
-            item.option_text
+          option_text: item.option_text
         });
       });
 
       setQuestions(groupedQuestions);
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching quiz:", error);
     }
   };
 
@@ -67,12 +55,9 @@ function AttemptQuiz() {
     question_id,
     selected_option
   ) => {
-    const updatedAnswers =
-      answers.filter(
-        (a) =>
-          a.question_id !==
-          question_id
-      );
+    const updatedAnswers = answers.filter(
+      (a) => a.question_id !== question_id
+    );
 
     updatedAnswers.push({
       question_id,
@@ -92,7 +77,7 @@ function AttemptQuiz() {
         "/submit-quiz",
         {
           student_id: user.user_id,
-          quiz_id: id,
+          quiz_id: quiz_id,
           answers
         }
       );
@@ -108,12 +93,12 @@ function AttemptQuiz() {
       });
     } catch (error) {
       console.log(error);
-      toast.error("Failed");
+      toast.error("Failed to submit quiz");
     }
   };
 
   return (
-    <div className="min-h-screen text-white">
+    <div className="min-h-screen bg-gradient-to-br from-[#020617] to-[#0f172a] text-white">
       <Navbar title="Attempt Quiz" />
 
       <div className="p-10">
@@ -121,34 +106,32 @@ function AttemptQuiz() {
           Attempt Quiz
         </h1>
 
-        <div className="space-y-8">
-          {questions.map((question) => (
-            <div
-              key={
-                question.question_id
-              }
-              className="backdrop-blur-lg bg-white/10 border border-white/20 p-8 rounded-3xl shadow-2xl"
-            >
-              <h2 className="text-3xl font-bold mb-6">
-                {
-                  question.question_text
-                }
-              </h2>
+        {questions.length === 0 ? (
+          <div className="text-2xl text-gray-300">
+            No Questions Found
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {questions.map((question, index) => (
+              <div
+                key={question.question_id}
+                className="backdrop-blur-lg bg-white/10 border border-white/20 p-8 rounded-3xl shadow-2xl"
+              >
+                <h2 className="text-3xl font-bold mb-6">
+                  Q{index + 1}.{" "}
+                  {question.question_text}
+                </h2>
 
-              <div className="space-y-4">
-                {question.options.map(
-                  (option) => (
+                <div className="space-y-4">
+                  {question.options.map((option) => (
                     <label
-                      key={
-                        option.option_id
-                      }
+                      key={option.option_id}
                       className="flex items-center gap-4 p-4 border border-white/20 rounded-xl hover:bg-white/10 transition cursor-pointer"
                     >
                       <input
                         type="radio"
-                        name={
-                          question.question_id
-                        }
+                        name={question.question_id}
+                        value={option.option_id}
                         onChange={() =>
                           handleOptionChange(
                             question.question_id,
@@ -158,24 +141,24 @@ function AttemptQuiz() {
                       />
 
                       <span className="text-xl">
-                        {
-                          option.option_text
-                        }
+                        {option.option_text}
                       </span>
                     </label>
-                  )
-                )}
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
-        <button
-          onClick={handleSubmit}
-          className="mt-10 bg-gradient-to-r from-purple-500 to-pink-500 px-10 py-5 rounded-2xl text-2xl font-bold hover:scale-105 transition"
-        >
-          Submit Quiz
-        </button>
+        {questions.length > 0 && (
+          <button
+            onClick={handleSubmit}
+            className="mt-10 bg-gradient-to-r from-purple-500 to-pink-500 px-10 py-5 rounded-2xl text-2xl font-bold hover:scale-105 transition"
+          >
+            Submit Quiz
+          </button>
+        )}
       </div>
     </div>
   );
